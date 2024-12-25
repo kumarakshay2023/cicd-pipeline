@@ -25,6 +25,68 @@ In order to generate Checkstyle reports and visualize them in Jenkins, you need 
 4. In the search box, type **Checkstyle Plugin**.
 5. Select the **Checkstyle Plugin** and click **Install without restart**.
 
+ **Install and Configure Tomcat for Deployment**
+
+   To set up Tomcat for deploying the application, follow these steps:
+
+   - **Download Tomcat**:
+     - Go to the official [Tomcat website](https://tomcat.apache.org/download-90.cgi) and copy the link address for the desired version.
+     - Download the Tomcat ZIP file using the following command:
+       ```bash
+       wget <Tomcat_ZIP_URL>
+       ```
+
+   - **Unzip the Tomcat Archive**:
+     - Extract the downloaded Tomcat ZIP file:
+       ```bash
+       unzip apache-tomcat-9.0.x.tar.gz
+       ```
+
+   - **Change Tomcat Port**:
+     - In the extracted Tomcat directory, navigate to the **conf** folder:
+       ```bash
+       cd apache-tomcat-9.0.x/conf
+       ```
+     - Open the `server.xml` file for editing:
+       ```bash
+       nano server.xml
+       ```
+     - Find the following line:
+       ```xml
+       <Connector port="8080" protocol="HTTP/1.1" ... />
+       ```
+     - Change the port from `8080` to another available port (e.g., `8081`) because Jenkins is already running on port `8080`:
+       ```xml
+       <Connector port="8081" protocol="HTTP/1.1" ... />
+       ```
+
+   - **Set Permissions for Tomcat Startup**:
+     - Go to the **bin** directory of Tomcat:
+       ```bash
+       cd ../bin
+       ```
+     - Change the permissions of the Tomcat startup script:
+       ```bash
+       chmod 700 *.sh
+       ```
+
+   - **Start Tomcat**:
+     - Start the Tomcat server by running the following command:
+       ```bash
+       ./startup.sh
+       ```
+
+   - **Configure EC2 Security Group for New Tomcat Port**:
+     - Go to the **Security Groups** section of your EC2 instance in the AWS Management Console.
+     - Select the security group associated with your EC2 instance.
+     - Click **Edit inbound rules** and add a new inbound rule:
+       - **Type**: Custom TCP Rule
+       - **Port Range**: `8081` (or the port you chose for Tomcat)
+       - **Source**: Select **Anywhere (0.0.0.0/0)** or a specific IP range depending on your security preferences.
+
+   Now, Tomcat will be running on the specified port (e.g., 8081), and you can deploy your application to the server.
+
+
 
 ### ----------  Script for the CI/CD pipeline fOR JAVA application -------------------------------- 
 
