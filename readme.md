@@ -14,10 +14,7 @@
 
 ### 6. Now we will write script to automate the CI/CD pipeline for java based application . 
 
-### ----------  Script for the CI/CD pipeline fOR JAVA application -------------------------------- 
-
-
-### 7. Install Checkstyle Plugin for QA Reports
+### 8. Install Checkstyle Plugin for QA Reports
 
 In order to generate Checkstyle reports and visualize them in Jenkins, you need to install the **Checkstyle** plugin.
 
@@ -28,14 +25,8 @@ In order to generate Checkstyle reports and visualize them in Jenkins, you need 
 4. In the search box, type **Checkstyle Plugin**.
 5. Select the **Checkstyle Plugin** and click **Install without restart**.
 
-Once the plugin is installed, you can use it in your Jenkins pipeline like this:
 
-```groovy
-steps {
-    sh "mvn checkstyle:checkstyle"
-    recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
-}
-
+### ----------  Script for the CI/CD pipeline fOR JAVA application -------------------------------- 
 
 ```
 pipeline{
