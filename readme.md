@@ -77,7 +77,6 @@ This error is related to permission issues for the **jenkins** user on your mach
 To resolve this issue, you need to grant the **jenkins** user permission to run `sudo` commands without a password prompt:
 
 1. Open the **sudoers** file using **visudo** to avoid syntax errors:
-   ```bash
    sudo visudo
    Add the following line to grant the jenkins user permission to run commands as sudo without a password prompt:
 
