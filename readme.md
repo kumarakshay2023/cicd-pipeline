@@ -55,3 +55,19 @@ pipeline{
     }
 }
 ```
+
+### 6. Resolve Jenkins Permission Issues (If Any)
+
+After running the script, you might encounter an error like this:
+This error is related to permission issues for the **jenkins** user on your machine. By default, Jenkins does not have the necessary privileges to execute commands with `sudo` without a password.
+
+#### Solution:
+To resolve this issue, you need to grant the **jenkins** user permission to run `sudo` commands without a password prompt:
+
+1. Open the **sudoers** file using **visudo** to avoid syntax errors:
+   ```bash
+   sudo visudo
+   Add the following line to grant the jenkins user permission to run commands as sudo without a password prompt:
+
+Copy code
+```jenkins ALL=(ALL) NOPASSWD: ALL```
