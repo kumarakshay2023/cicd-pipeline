@@ -11,3 +11,47 @@
 ### 4. Access Jenkins and Complete Initial Setup: After installing Jenkins on your machine, copy the initial Jenkins password provided after running the `./jenkins.sh` script (displayed in the last line of the terminal output), open your browser and navigate to `http://<your-ec2-public-ip>:8080`, paste the copied password into the Jenkins setup page to unlock Jenkins, and complete the basic setup by providing a **username**, **password**, **email address**, and **full name** for the admin user, and proceeding with the setup by installing the suggested plugins or selecting the ones you need.
 
 ### 5. Click on Create Job, then select Pipeline and start writing the script. Groovy is a scripting language used to write the code to automate the CI/CD pipeline.
+
+### 6. Now we will write script to automate the CI/CD pipeline for java based application . 
+
+### ----------  Script for the CI/CD pipeline fOR JAVA application -------------------------------- 
+
+```
+pipeline{
+    agent any
+    stages{
+        stage("git clone"){
+            steps{
+                git url: "https://github.com/kumarakshay2023/JavaApp"
+                echo "we have cloned the github repo"
+            }
+        }
+        stage("compile the code"){
+            steps{
+                sh "mvn compile"
+            }
+        }
+        stage("test"){
+            steps{
+                sh "mvn test"
+            }
+        }
+        stage("qualitycheck for project"){
+            steps{
+                sh "mvn checkstyle:checkstyle"
+                recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [checkStyle()]
+            }
+        }
+        stage("package the code"){
+            steps{
+                sh "mvn package"
+            }
+        }
+        stage("deploy the app on tomcat"){
+            steps{
+                sh "sudo mv /var/lib/jenkins/workspace/cicdproject/target/addressbook.war /home/ubuntu/apache-tomcat-9.0.97/webapps"
+            }
+        }
+    }
+}
+```
